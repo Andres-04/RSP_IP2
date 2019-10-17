@@ -229,11 +229,25 @@ Usando un dispositivo inalámbrico, busque redes. El SSID de red que especificó
 
 - Funcionamiento del sensor DS18B20
 
+El DS18B20 es un sensor digital de temperatura que utiliza el protocolo 1-Wire para comunicarse, este protocolo necesita solo un pin de datos para comunicarse y permite conectar más de un sensor en el mismo bus.
 
+El sensor DS18B20 es fabricado por Maxim Integrated, el encapsulado de fabrica es tipo TO-92 similar al empleado en transistores pequeños.Con este sensor podemos medir temperatura desde los -55°C hasta los 125°C y con una resolución programable desde 9 bits hasta 12 bits. Para temperaturas entre -10ºC y 85ºC podemos tener un error de ±0,5ºC. Para el resto de temperaturas entre -55ºC y 125ºC el error es de ±2ºC.Esto equivale a decir que si el sensor DS18B20 suministra una temperatura de 23ºC el valor real estará entre 22,5ºC y 23,5ºC. Si por el contrario suministra un valor de 90ºC el valor real estará entre 88ºC y 92ºC.
+
+Cada sensor tiene una dirección unica de 64bits establecida de fábrica, esta dirección sirve para identificar al dispositivo con el que se está comunicando, puesto que en un bus 1-wire pueden existir más de un dispositivo. Además de medir la temperatura, el DS18B20 incorpora una memoria de 64-bit (equivalente a 8 bytes) para almacenar el identificador o dirección única de cada sensor.
+
+El primer byte identifica el tipo de componente. Por ejemplo para los DS18B20 es el número 28 en hexadecimal.
+
+Esta dirección única es necesaria dentro del bus 1-Wire para identificar cada uno de los sensores de temperatura DS18B20 conectados al bus de comunicación.
+
+Gracias a que utiliza este tipo de comunicaciones, se consiguen dos cosas. Por un lado robustez en la transmisión de los datos ya que trabaja con datos digitales, mucho menos sensibles a los efectos adversos del ruido que las señales analógicas. Por otro lado permite conectar muchos sensores de temperatura con un único pin digital.
 
 # Implementación
 
-- Diagrama de bloques
+- Diagrama de bloques y actividades
+
+El diagrama de bloques y actividades obtenido luego de finalizar nuestro proyecto fue el siguiente:
+
+![Diagrama_actividades](https://user-images.githubusercontent.com/54821299/67030297-bdd38600-f0d4-11e9-994b-55257f2f7266.png)
 
 - Criterios de diseño
 
