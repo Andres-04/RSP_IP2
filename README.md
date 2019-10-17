@@ -24,3 +24,33 @@ A modo de afianzar los conocimientos obtenidos durante el segundo corte se llev�
 - 1 sensor digital DS18B20
 - 1 protoboard y cables
 - Elementos eléctricos para el circuito de acondicionamiento del sensor DS18B20 y actuador LED
+
+# Proceso de implementación
+
+# Configuración de la comunicación I2C
+
+# Configuración del puerto HOSTPOT
+
+# Implementación
+
+- Diagrama de bloques
+
+- Criterios de diseño
+
+- Esquematico del circuito
+
+- Evidencias
+
+- Código utilizado
+
+Maestro:
+
+Esclavo:
+
+
+
+# Conclusiones 
+
+# Referencias
+
+
