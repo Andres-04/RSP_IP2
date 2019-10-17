@@ -1,9 +1,3 @@
-# Tabla de contenidos
-
-- [Introducción](#sistema-de-monitoreo-basado-en-IoT-para-aplicaciones-en-interiores-usando-un-controlador-de-dos-niveles).
-- [Objetivos](#objetivos).
--
-
 # Sistema de monitoreo basado en Iot para aplicaciones en interiores usando un controlador de dos niveles
 
 A modo de afianzar los conocimientos obtenidos durante el segundo corte se llevó acabo el siguiente proyecto. En este proyecto pusimos en practica conocimientos como crear una red HOSTPOT desde la Raspberry PI 3, protocolo I2C y utilizamos conocimientos previos como el manejo y configuración del sensor digital DS18B20.
@@ -33,7 +27,7 @@ A modo de afianzar los conocimientos obtenidos durante el segundo corte se llev�
 
 # Proceso de implementación
 
-- Configuración de la comunicación I2C
+- **Configuración de la comunicación I2C**
 
 Estos pasos solo son validos para Raspbian, revisa el SO que estas utilizando ya que hay unos que vienen listos para usar el I2C, de cualquier manera se recomienda actualizar la versión del SO que se este utilizando. Para comenzar abrimos la terminal y escribimos el siguiente comando:
 
@@ -120,7 +114,7 @@ pi@raspberrypi ~ $ i2cdetect -y 1
 70: -- -- -- -- -- -- -- --
 ```
 
-- Configuración del puerto HOSTPOT
+- **Configuración del puerto HOSTPOT**
 
 La Raspberry Pi se puede usar como un punto de acceso inalámbrico, ejecutando una red independiente. Esto se puede hacer usando las funciones inalámbricas incorporadas de Raspberry Pi 3 o Raspberry Pi Zero W, o usando un dongle inalámbrico USB adecuado que admita puntos de acceso.
 
@@ -233,7 +227,7 @@ Reinicie y asegúrese de que todavía funcione.
 
 Usando un dispositivo inalámbrico, busque redes. El SSID de red que especificó en la configuración de hostapd ahora debería estar presente, y debería ser accesible con la contraseña especificada.
 
-- Funcionamiento del sensor DS18B20
+- **Funcionamiento del sensor DS18B20**
 
 El DS18B20 es un sensor digital de temperatura que utiliza el protocolo 1-Wire para comunicarse, este protocolo necesita solo un pin de datos para comunicarse y permite conectar más de un sensor en el mismo bus.
 
@@ -249,17 +243,17 @@ Gracias a que utiliza este tipo de comunicaciones, se consiguen dos cosas. Por u
 
 # Implementación
 
-- Diagrama de bloques y actividades
+- **Diagrama de bloques y actividades**
 
 El diagrama de bloques y actividades obtenido luego de finalizar nuestro proyecto fue el siguiente:
 
 ![Diagrama_actividades](https://user-images.githubusercontent.com/54821299/67030297-bdd38600-f0d4-11e9-994b-55257f2f7266.png)
 
-- Criterios de diseño
+- **Criterios de diseño**
 
 Con el fin de alcanzar un sistema robusto que permita leer “constantemente" la variable de temperatura, se implementa un sistema de adquisición/control de dos niveles, tal como se muestra en la Figura 1. El sistema se encargará de leer adecuadamente el sensor DS18B20, cumpliendo a cabalidad las restricciones temporales que se piden. Por otro lado, la plataforma Raspberry Pi implementa el servidor central con una base de datos (gestionada en SQLite3), que almacena el último valor medido y el histórico de datos, y un Front-End gestionado por un servidor web local, que permita visualizar tanto el último valor medido como el histórico de datos de temperatura almacenados en la base de datos. Adicionalmente, el servidor central deberá generar una notificación al usuario al sobrepasar umbrales críticos de temperatura, por medio de un LED y una notificación visual en el Front-End. La comunicación entre ambos niveles se debe realizar por medio de un protocolo de comunicación I2C. Con esta arquitectura se logra explotar las capacidades particulares de cada una de las plataformas utilizadas.
 
-- Esquematico del circuito
+- **Esquematico del circuito**
 
 Para el esquematico del circuito decidimos utilizar la herramienta Fritzing. Las conexiónes quedaron de la siguiente manera:
 
@@ -267,7 +261,7 @@ Para el esquematico del circuito decidimos utilizar la herramienta Fritzing. Las
 
 - Evidencias
 
-- Código utilizado
+- **Código utilizado**
 
 Maestro:
 
