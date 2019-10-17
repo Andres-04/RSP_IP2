@@ -247,9 +247,74 @@ Para el esquematico del circuito decidimos utilizar la herramienta Fritzing. Las
 
 Maestro:
 
+```
+import smbus #Librerias  para la comunicación
+import time
+bus = smbus.SMBus(1) # SMBus(1) en RPI 3B y SMBus(0) en RPI A
+address = 0x04 #Configuramos la dirección para la comunicación I2C
+
+#Recibimos la temperatura del Arduino UNO y la asignamos a Temp
+def Leer(): 
+	Temp = bus.read_byte(address)
+return Temp
+
+Temp = Leer()
+print "La temperatura es: ", Temp #Mostramos la temperatura en pantalla
+#Enviamos 1 si Temp>26 y 0 si Temp<=26 para encender o apagar la alarma
+def Escribir(value):
+	if(Temp > 26):
+		Led = bus.write_byte(address, 1)
+	if(Temp <= 26):
+		Led = bus.write_byte(address, 0)
+time.sleep(1)	
+```
+
 Esclavo:
 
+```
+#include <Wire.h> //Librería para comunicación I2C
+#include <DallasTemperature.h> //Librería sensor DS18B20
+#define address = 0x04 //Dirección de I2C
+int Led = 3; //Led para la alarma
+int stateLed = 0; //Estado de la alarma
+OneWire ourWire(2); //Definimos el pin del sensor
+DallasTemperature sensors(&ourWire);
+void setup() {
+  delay(1000);
+  Serial.begin(9600);
+  pinMode(Led, OUTPUT)
+  sensors.begin(); // Revisar 
+  Wire.begin(address)
+  Wire.onReceive(Leer); //Llamamos algunas funciones 
+  Wire.onRequest(Escribir);
+  Serial.println("Ready!");
+}
 
+void loop() {
+  sensors.requestTemperatures(); //Avisa que leera la temperatura
+  float Temp = sensors.getTempCByIndex(0); //Asigna la temperatura a Temp
+  Serial.print("Temperatura= ");
+  Serial.print(Temp);
+  delay(100);
+}
+// Si la comunicación con la RSP esta activa le asigna a StateLed el valor recibido
+// Si es 1 enciende el led, si es 0 lo apaga
+void Leer(int byteCount){
+  while(Wire.available()){
+    stateLed = Wire.read();
+    if(stateLed == 1){
+      digitalWrite(Led, HIGH);
+    }
+    if(stateLed == 0){
+      digitalWrite(Led, LOW);
+    }
+  }
+}
+//Enviamos el valor de temperatura leido
+void Escribir(){
+  Wire.write(Temp);
+}
+```
 
 # Conclusiones 
 
