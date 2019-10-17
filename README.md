@@ -101,7 +101,7 @@ Para Raspberry modelo B ejecutar el comando:
 
 Este es el resultado que tengo al conectar un Arduino UNO, me muestra que la dirección es 0x20 (32 en decimal).
 
-``
+```
 pi@raspberrypi ~ $ i2cdetect -y 1
      0  1  2  3  4  5  6  7  8  9  a  b  c  d  e  f
 00:          -- -- -- -- -- -- -- -- -- -- -- -- --
@@ -112,9 +112,63 @@ pi@raspberrypi ~ $ i2cdetect -y 1
 50: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
 60: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
 70: -- -- -- -- -- -- -- --
-``
+```
 
 - Configuración del puerto HOSTPOT
+
+La Raspberry Pi se puede usar como un punto de acceso inalámbrico, ejecutando una red independiente. Esto se puede hacer usando las funciones inalámbricas incorporadas de Raspberry Pi 3 o Raspberry Pi Zero W, o usando un dongle inalámbrico USB adecuado que admita puntos de acceso.
+
+Para crear un punto de acceso, necesitaremos DNSMasq y HostAPD. Instale todo el software requerido de una vez con este comando:
+
+```sudo apt install dnsmasq hostapd```
+
+Como los archivos de configuración aún no están listos, apague el nuevo software de la siguiente manera:
+
+```
+sudo systemctl stop dnsmasq
+sudo systemctl stop hostapd
+```
+
+Esta documentación asume que estamos utilizando las direcciones IP estándar `192.168.xx` para nuestra red inalámbrica, por lo que asignaremos al servidor la dirección IP `192.168.4.1.` También se supone que el dispositivo inalámbrico que se está utilizando es `wlan0`.
+
+Para configurar la dirección IP estática, edite el archivo de configuración dhcpcd con:
+
+```sudo nano /etc/dhcpcd.conf```
+
+Vaya al final del archivo y edítelo para que tenga el siguiente aspecto:
+
+```
+interface wlan0
+    static ip_address=192.168.4.1/24
+    nohook wpa_supplicant
+```
+
+Ahora reinicie el `daemon dhcpcd` y configure la nueva `wlan0` configuración:
+
+```
+sudo service dhcpcd restart
+```
+
+El servicio DHCP es proporcionado por dnsmasq. De manera predeterminada, el archivo de configuración contiene mucha información que no es necesaria y es más fácil comenzar desde cero. Cambie el nombre de este archivo de configuración y edite uno nuevo:
+
+`sudo mv /etc/dnsmasq.conf /etc/dnsmasq.conf.orig`
+`sudo nano /etc/dnsmasq.conf`
+
+Escriba o copie la siguiente información en el archivo de configuración dnsmasq y guárdela:
+
+```
+interface=wlan0      # Use the require wireless interface - usually wlan0
+dhcp-range=192.168.4.2,192.168.4.20,255.255.255.0,24h
+```
+
+Entonces wlan0, vamos a proporcionar direcciones IP entre 192.168.4.2 y 192.168.4.20, con un tiempo de arrendamiento de 24 horas. Vuelva dnsmasqa cargar para usar la configuración actualizada:
+
+`sudo systemctl reload dnsmasq`
+
+Debe editar el archivo de configuración de hostapd, ubicado en /etc/hostapd/hostapd.conf, para agregar los diversos parámetros para su red inalámbrica. Después de la instalación inicial, este será un archivo nuevo / vacío.
+
+`sudo nano /etc/hostapd/hostapd.conf`
+
 
 # Implementación
 
@@ -138,4 +192,5 @@ Esclavo:
 
 # Referencias
 
+https://botboss.wordpress.com/2015/07/27/habilitar-comunicacion-i2c-en-rasberry-pi-2/
 
