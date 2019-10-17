@@ -345,6 +345,7 @@ Afortunadamente los estándares mínimos se cumplieron y logramos llevar a cabo 
 
 # Referencias
 
-https://botboss.wordpress.com/2015/07/27/habilitar-comunicacion-i2c-en-rasberry-pi-2/
-https://www.raspberrypi.org/documentation/configuration/wireless/access-point.md
+- BotBoss (2015). Habilitar comunicación I2C en Raspberry PI. Disponible en: botboss.wordpress.com/2015/07/27/habilitar-comunicacion-i2c-en-rasberry-pi-2/
+- RaspberryPI ORG (2016). Punto de acceso en Raspberry PI. Disponible en: www.raspberrypi.org/documentation/configuration/wireless/access-point.md
+Programar fácil (2016). Funcionamiento del sensor DS18B20. Disponible en: programarfacil.com/blog/arduino-blog/ds18b20-sensor-temperatura-arduino/
 
