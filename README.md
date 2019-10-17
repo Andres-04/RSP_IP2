@@ -237,6 +237,10 @@ Usando un dispositivo inalámbrico, busque redes. El SSID de red que especificó
 
 - Esquematico del circuito
 
+Para el esquematico del circuito decidimos utilizar la herramienta Fritzing. Las conexiónes quedaron de la siguiente manera:
+
+![Esquematico_I2C](https://user-images.githubusercontent.com/54821299/67021921-00419680-f0c6-11e9-857d-2cc72cdecfdb.PNG)
+
 - Evidencias
 
 - Código utilizado
