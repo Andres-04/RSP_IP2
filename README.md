@@ -318,6 +318,13 @@ void Escribir(){
 
 # Conclusiones 
 
+Luego de realizar el proyecto logramos afianzar los conceptos básicos asociados a Internet de las Cosas vistos durante los últimos dos cortes del semestre, pudimos familiarizarnos con el manejo de gestores de bases de datos, con una arquitectura de dos niveles, entre otros conocimientos importantes para nuestra vida académica y también para una futura vida laboral pues son conocimientos esenciales para todo Ingeniero Electrónico.
+
+
+Afortunadamente los estándares mínimos se cumplieron y logramos llevar a cabo los requerimientos obteniendo una solución IOT básica de acuerdo a los criterios del diseño planteados al inicio del proyecto. Con las herramientas adquiridas en el primer y segundo corte esperamos para el tercer corte poder entregar una solución IoT más completa y profesional acorde a los estándares de calidad del mercado.
+
+
+
 # Referencias
 
 https://botboss.wordpress.com/2015/07/27/habilitar-comunicacion-i2c-en-rasberry-pi-2/
