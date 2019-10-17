@@ -227,6 +227,8 @@ Reinicie y asegúrese de que todavía funcione.
 
 Usando un dispositivo inalámbrico, busque redes. El SSID de red que especificó en la configuración de hostapd ahora debería estar presente, y debería ser accesible con la contraseña especificada.
 
+- Funcionamiento del sensor DS18B20
+
 
 
 # Implementación
@@ -234,6 +236,8 @@ Usando un dispositivo inalámbrico, busque redes. El SSID de red que especificó
 - Diagrama de bloques
 
 - Criterios de diseño
+
+Con el fin de alcanzar un sistema robusto que permita leer “constantemente" la variable de temperatura, se implementa un sistema de adquisición/control de dos niveles, tal como se muestra en la Figura 1. El sistema se encargará de leer adecuadamente el sensor DS18B20, cumpliendo a cabalidad las restricciones temporales que se piden. Por otro lado, la plataforma Raspberry Pi implementa el servidor central con una base de datos (gestionada en SQLite3), que almacena el último valor medido y el histórico de datos, y un Front-End gestionado por un servidor web local, que permita visualizar tanto el último valor medido como el histórico de datos de temperatura almacenados en la base de datos. Adicionalmente, el servidor central deberá generar una notificación al usuario al sobrepasar umbrales críticos de temperatura, por medio de un LED y una notificación visual en el Front-End. La comunicación entre ambos niveles se debe realizar por medio de un protocolo de comunicación I2C. Con esta arquitectura se logra explotar las capacidades particulares de cada una de las plataformas utilizadas.
 
 - Esquematico del circuito
 
