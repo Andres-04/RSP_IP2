@@ -169,6 +169,65 @@ Debe editar el archivo de configuración de hostapd, ubicado en /etc/hostapd/hos
 
 `sudo nano /etc/hostapd/hostapd.conf`
 
+Agregue la siguiente información al archivo de configuración. Esta configuración asume que estamos usando el canal 7, con un nombre de red de `Nombre` y una contraseña `Contraseña`. Tenga en cuenta que el nombre y la contraseña no deben tener comillas a su alrededor. La frase de contraseña debe tener entre 8 y 64 caracteres de longitud.
+
+```
+interface=wlan0
+driver=nl80211
+ssid=Nombre
+hw_mode=g
+channel=7
+wmm_enabled=0
+macaddr_acl=0
+auth_algs=1
+ignore_broadcast_ssid=0
+wpa=2
+wpa_passphrase=Contraseña
+wpa_key_mgmt=WPA-PSK
+wpa_pairwise=TKIP
+rsn_pairwise=CCMP
+```
+
+Ahora necesitamos decirle al sistema dónde encontrar este archivo de configuración.
+
+`sudo nano /etc/default/hostapd`
+
+Busque la línea con `#DAEMON_CONF` y reemplácela con esto:
+
+`DAEMON_CONF="/etc/hostapd/hostapd.conf"`
+
+Ahora habilite y comience hostapd:
+
+`sudo systemctl unmask hostapd`
+`sudo systemctl enable hostapd`
+`sudo systemctl start hostapd`
+
+Haga una comprobación rápida de su estado para asegurarse de que estén activos y en ejecución:
+
+`sudo systemctl status hostapd`
+`sudo systemctl status dnsmasq`
+
+Edite `/etc/sysctl.conf` y descomente esta línea:
+
+`net.ipv4.ip_forward=1`
+
+Agregue una mascarada para el tráfico saliente en `eth0`:
+
+`sudo iptables -t nat -A  POSTROUTING -o eth0 -j MASQUERADE`
+
+Guarde la regla de iptables.
+
+`sudo sh -c "iptables-save > /etc/iptables.ipv4.nat"`
+
+Edite `/etc/rc.local` y agregue esto justo arriba de "exit 0" para instalar estas reglas en el arranque.
+
+`iptables-restore < /etc/iptables.ipv4.nat`
+
+Reinicie y asegúrese de que todavía funcione.
+
+Usando un dispositivo inalámbrico, busque redes. El SSID de red que especificó en la configuración de hostapd ahora debería estar presente, y debería ser accesible con la contraseña especificada.
+
+
 
 # Implementación
 
@@ -193,4 +252,5 @@ Esclavo:
 # Referencias
 
 https://botboss.wordpress.com/2015/07/27/habilitar-comunicacion-i2c-en-rasberry-pi-2/
+https://www.raspberrypi.org/documentation/configuration/wireless/access-point.md
 
