@@ -259,7 +259,9 @@ Para el esquematico del circuito decidimos utilizar la herramienta Fritzing. Las
 
 ![Esquematico_I2C](https://user-images.githubusercontent.com/54821299/67021921-00419680-f0c6-11e9-857d-2cc72cdecfdb.PNG)
 
-- Evidencias
+- **Evidencias**
+
+![Evidencia](https://user-images.githubusercontent.com/54821299/67060459-7b389a80-f122-11e9-832c-9cee4da1985b.jpg)
 
 - **Código utilizado**
 
